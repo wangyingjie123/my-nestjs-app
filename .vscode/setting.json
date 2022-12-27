@@ -1,0 +1,23 @@
+{
+  //...
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "eslint.probe": [
+      "javascript",
+      "javascriptreact",
+      "vue"
+  ],
+  "vetur.validation.template": false,
+  
+  "eslint.alwaysShowStatus": true,
+  "editor.formatOnSave": true,
+  //对JS和JJSX关闭，我们将通过eslint来做这件事
+  "[javascript, javascriptreact]": {
+    "editor.formatOnSave": false
+  },
+  //告诉ESLint插件在保存时运行
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  },
+  // 可选但重要的是：如果你为其他语言（如CSS和HTML）启用了prettier扩展，请关闭JS的扩展，因为我们已经通过ESLint做了。
+  "prettier.disableLanguages": ["javascript", "javascriptreact"]
+}
