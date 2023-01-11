@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { FeishuService } from './feishu.service';
-import { FeishuMessageDto } from './feishu.dto';
+import { FeishuMessageDto, GetUserTokenDto } from './feishu.dto';
 
 @ApiTags('飞书')
 @Controller('feishu')
@@ -32,5 +32,15 @@ export class FeishuController {
   @Version([VERSION_NEUTRAL])
   findAll() {
     return this.feishuService.getChatsId();
+  }
+
+  @ApiOperation({
+    summary: '获取用户凭证',
+  })
+  @Post('getUserToken')
+  @Version([VERSION_NEUTRAL])
+  getUserToken(@Body() params: GetUserTokenDto) {
+    const { code } = params;
+    return this.feishuService.getUserToken(code);
   }
 }

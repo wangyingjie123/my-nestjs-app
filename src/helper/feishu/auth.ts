@@ -53,7 +53,10 @@ export const getUserAccessToken = async (code) => {
   });
   return data as GetAppTokenRes;
 };
-
+/**
+ * 获取自建应用app_token
+ * @returns token
+ */
 export const getAppToken = async () => {
   const { data } = await methodV({
     url: `/auth/v3/app_access_token/internal`,

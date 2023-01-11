@@ -27,8 +27,8 @@ interface IMethodV {
   query?: Record<string, unknown>;
 }
 
-export interface IRequest {
-  data: any;
+export interface IRequest<T = Record<string, unknown>> {
+  data: T;
   code: number;
 }
 
@@ -63,6 +63,7 @@ const methodV = async ({
         },
       })
         .then(({ data, status }) => {
+          console.log(data);
           resolve({ data, code: status });
         })
         .catch((error) => {

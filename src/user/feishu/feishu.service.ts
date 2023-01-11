@@ -2,7 +2,7 @@ import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
 import {
   getAppToken,
   // getUserAccessToken,
-  // getUserToken,
+  getUserToken,
   // refreshUserToken,
 } from 'src/helper/feishu/auth';
 import { Cache } from 'cache-manager';
@@ -10,6 +10,7 @@ import { BusinessException } from '@/common/exceptions/business.exception';
 import { ConfigService } from '@nestjs/config';
 import { messages } from '@/helper/feishu/message';
 import { getChatGroupId } from '@/helper/feishu/user';
+import { GetUserTokenDto } from './feishu.dto';
 
 @Injectable()
 export class FeishuService {
@@ -20,11 +21,10 @@ export class FeishuService {
   ) {
     this.APP_TOKEN_CACHE_KEY = this.configService.get('APP_TOKEN_CACHE_KEY');
   }
-
+  // 获取apptoken
   async getAppTokenFromCache(): Promise<string> {
     let appToken: string;
     appToken = await this.cacheManager.get(this.APP_TOKEN_CACHE_KEY);
-    console.log('appToken', appToken);
     if (!appToken) {
       const response = await getAppToken();
       if (response.code === 0) {
@@ -41,14 +41,28 @@ export class FeishuService {
     }
     return appToken;
   }
-
+  // 飞书发送消息
   async sendMessage(receive_id_type, params) {
     const app_token = await this.getAppTokenFromCache();
     return messages(receive_id_type, params, app_token as string);
   }
-
+  // 获取飞书群组id
   async getChatsId() {
     const app_token = await this.getAppTokenFromCache();
     return getChatGroupId(app_token);
+  }
+  // 获取用户token
+  async getUserToken(code: string) {
+    const app_token = await this.getAppTokenFromCache();
+    console.log(app_token);
+    const dto: GetUserTokenDto = {
+      code,
+      app_token,
+    };
+    const res: any = await getUserToken(dto);
+    if (res.code !== 0) {
+      throw new BusinessException(res.msg);
+    }
+    return res.data;
   }
 }

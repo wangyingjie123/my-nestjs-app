@@ -9,13 +9,14 @@ import {
   Version,
   VERSION_NEUTRAL,
 } from '@nestjs/common';
-import { ApiOperation } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 import { UserService } from './user.service';
 import { AddUserDto } from './dto/create-user.dto';
 // import { UpdateUserDto } from './dto/update-user.dto';
 
 import { BusinessException } from 'src/common/exceptions/business.exception';
+@ApiTags('user')
 @Controller({
   path: 'user',
 })
@@ -40,11 +41,6 @@ export class UserController {
   }
 
   @Get()
-  @Version([VERSION_NEUTRAL, '1'])
-  findAll() {
-    return this.userService.findAll();
-  }
-  @Get()
   @Version('2')
   findAll2() {
     return 'i am new one';
@@ -60,7 +56,7 @@ export class UserController {
       throw new BusinessException('你这个参数错了！');
     }
 
-    return this.userService.findAll();
+    return 'i am new error';
   }
 
   @Get(':id')

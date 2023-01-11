@@ -10,6 +10,6 @@ import { FeishuController } from './feishu/feishu.controller';
   imports: [DatabaseModule],
   controllers: [FeishuController, UserController],
   providers: [...UserProviders, UserService, FeishuService],
-  exports: [UserService],
+  exports: [UserService, FeishuService],
 })
 export class UserModule {}

@@ -1,10 +1,13 @@
 import { CacheModule, Module, CacheStore } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { redisStore } from 'cache-manager-redis-store';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+// import { AppController } from './app.controller';
+// import { AppService } from './app.service';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { UserModule } from './user/user.module';
 import { getConfig } from './utils';
+import { AuthModule } from './auth/auth.module';
 
 const redisConfig = getConfig().REDIS_CONFIG;
 @Module({
@@ -35,8 +38,14 @@ const redisConfig = getConfig().REDIS_CONFIG;
       load: [getConfig],
     }),
     UserModule,
+    AuthModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+  ],
 })
 export class AppModule {}
