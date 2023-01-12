@@ -19,7 +19,6 @@ export class AuthService {
     const feishuInfo: FeishuUserInfo = await this.getFeishuTokenByApplications(
       code,
     );
-
     // 将飞书的用户信息同步到数据库
     const user: User = await this.userService.createOrUpdateByFeishu(
       feishuInfo,

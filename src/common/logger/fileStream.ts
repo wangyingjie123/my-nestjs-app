@@ -209,7 +209,7 @@ export class FileStream extends LogStream {
         this.reloadStream();
       })
       .catch((e) => {
-        console.log(e);
+        console.error(e);
         this.reloadStream();
       });
   }

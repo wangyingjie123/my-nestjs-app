@@ -16,7 +16,7 @@ import { AddUserDto } from './dto/create-user.dto';
 // import { UpdateUserDto } from './dto/update-user.dto';
 
 import { BusinessException } from 'src/common/exceptions/business.exception';
-@ApiTags('user')
+@ApiTags('用户信息')
 @Controller({
   path: 'user',
 })
@@ -36,7 +36,6 @@ export class UserController {
 
   @Get('getTestName')
   getTestName() {
-    console.log('getTestName');
     return this.configService.get('TEST_VALUE').name;
   }
 
