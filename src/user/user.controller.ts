@@ -3,18 +3,20 @@ import {
   Get,
   Post,
   Body,
-  Patch,
+  // Patch,
   Param,
   Delete,
   Version,
   VERSION_NEUTRAL,
 } from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { AddUserDto } from './dto/create-user.dto';
+// import { UpdateUserDto } from './dto/update-user.dto';
 
 import { BusinessException } from 'src/common/exceptions/business.exception';
+@ApiTags('用户信息')
 @Controller({
   path: 'user',
 })
@@ -24,22 +26,19 @@ export class UserController {
     private readonly configService: ConfigService,
   ) {}
 
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+  @ApiOperation({
+    summary: '新增用户',
+  })
+  @Post('/add')
+  create(@Body() user: AddUserDto) {
+    return this.userService.createOrSave(user);
   }
 
   @Get('getTestName')
   getTestName() {
-    console.log('getTestName');
     return this.configService.get('TEST_VALUE').name;
   }
 
-  @Get()
-  @Version([VERSION_NEUTRAL, '1'])
-  findAll() {
-    return this.userService.findAll();
-  }
   @Get()
   @Version('2')
   findAll2() {
@@ -56,17 +55,12 @@ export class UserController {
       throw new BusinessException('你这个参数错了！');
     }
 
-    return this.userService.findAll();
+    return 'i am new error';
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.userService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+id, updateUserDto);
   }
 
   @Delete(':id')
