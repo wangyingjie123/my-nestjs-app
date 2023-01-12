@@ -37,7 +37,7 @@ export class AuthService {
   // jwt 登录
   async login(user: Payload) {
     return {
-      access_token: this.jwtService.sign(user),
+      access_token: this.jwtService.sign({ ...user }),
     };
   }
 

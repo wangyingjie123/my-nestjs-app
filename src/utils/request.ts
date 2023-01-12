@@ -63,7 +63,6 @@ const methodV = async ({
         },
       })
         .then(({ data, status }) => {
-          console.log(data);
           resolve({ data, code: status });
         })
         .catch((error) => {

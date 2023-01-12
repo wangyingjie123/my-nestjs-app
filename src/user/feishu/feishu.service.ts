@@ -24,7 +24,7 @@ export class FeishuService {
   // 获取apptoken
   async getAppTokenFromCache(): Promise<string> {
     let appToken: string;
-    // appToken = await this.cacheManager.get(this.APP_TOKEN_CACHE_KEY);
+    appToken = await this.cacheManager.get(this.APP_TOKEN_CACHE_KEY);
     if (!appToken) {
       const response = await getAppToken();
       if (response.code === 0) {
@@ -54,7 +54,6 @@ export class FeishuService {
   // 获取用户token
   async getUserToken(code: string) {
     const app_token = await this.getAppTokenFromCache();
-    console.log(app_token);
     const dto: GetUserTokenDto = {
       code,
       app_token,
