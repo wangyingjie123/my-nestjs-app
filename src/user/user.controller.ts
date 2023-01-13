@@ -11,11 +11,10 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
+import { BusinessException } from '@/common/exceptions/business.exception';
 import { UserService } from './user.service';
 import { AddUserDto } from './dto/create-user.dto';
-// import { UpdateUserDto } from './dto/update-user.dto';
 
-import { BusinessException } from 'src/common/exceptions/business.exception';
 @ApiTags('用户信息')
 @Controller({
   path: 'user',
@@ -34,19 +33,16 @@ export class UserController {
     return this.userService.createOrSave(user);
   }
 
+  @ApiOperation({
+    summary: '获取yaml配置文件中的值',
+  })
   @Get('getTestName')
   getTestName() {
     return this.configService.get('TEST_VALUE').name;
   }
 
-  @Get()
-  @Version('2')
-  findAll2() {
-    return 'i am new one';
-  }
-
   @Get('findBusinessError')
-  @Version([VERSION_NEUTRAL, '1'])
+  @Version([VERSION_NEUTRAL])
   findError() {
     const a: any = {};
     try {
@@ -59,11 +55,13 @@ export class UserController {
   }
 
   @Get(':id')
+  @Version([VERSION_NEUTRAL])
   findOne(@Param('id') id: string) {
     return this.userService.findOne(+id);
   }
 
   @Delete(':id')
+  @Version([VERSION_NEUTRAL])
   remove(@Param('id') id: string) {
     return this.userService.remove(+id);
   }
