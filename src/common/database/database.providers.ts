@@ -1,6 +1,6 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { getConfig } from 'src/utils/index';
-const path = require('path');
+import { join } from 'path';
 
 // 设置数据库类型
 const databaseType: DataSourceOptions['type'] = 'mongodb';
@@ -10,10 +10,7 @@ const MONGODB_DATABASE_CONFIG = {
   ...MONGODB_CONFIG,
   type: databaseType,
   entities: [
-    path.join(
-      __dirname,
-      `../../**/*.${MONGODB_CONFIG.entities}.entity{.ts,.js}`,
-    ),
+    join(__dirname, `../../**/*.${MONGODB_CONFIG.entities}.entity{.ts,.js}`),
   ],
 };
 

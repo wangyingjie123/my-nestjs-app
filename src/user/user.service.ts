@@ -18,12 +18,15 @@ export class UserService {
   async createOrUpdateByFeishu(feishuUserInfo: FeishuUserInfo) {
     return await this.userRepository.save(feishuUserInfo);
   }
-
-  // demo-暂时不用
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  // 查找用户
+  async findOne(id: number) {
+    return await this.userRepository
+      .createQueryBuilder('user')
+      .where('user.id = :id', { id })
+      .getOne();
   }
 
+  // demo-暂时不用
   update(id: number) {
     return `This action updates a #${id} user`;
   }
