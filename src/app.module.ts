@@ -1,13 +1,13 @@
 import { CacheModule, Module, CacheStore } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { redisStore } from 'cache-manager-redis-store';
-// import { AppController } from './app.controller';
-// import { AppService } from './app.service';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
+
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
-import { UserModule } from './user/user.module';
-import { getConfig } from './utils';
+import { PageModule } from './materials/page/page.module';
 import { AuthModule } from './auth/auth.module';
+import { TransformInterceptor } from './common/interceptors/transform.interceptor';
+import { redisStore } from 'cache-manager-redis-store';
+import { getConfig } from './utils';
 
 const redisConfig = getConfig().REDIS_CONFIG;
 @Module({
@@ -37,11 +37,15 @@ const redisConfig = getConfig().REDIS_CONFIG;
       isGlobal: true,
       load: [getConfig],
     }),
-    UserModule,
     AuthModule,
+    PageModule,
   ],
   controllers: [],
   providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: TransformInterceptor,
+    },
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
