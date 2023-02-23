@@ -1,12 +1,11 @@
 import { Controller, Post, Body } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
-
 import { PageConfigService } from './page-config.service';
 import {
   CreatePageConfigDto,
   SearchPageConfigDto,
 } from './dto/create-page-config.dto';
 import { PageService } from '../page.service';
+import { ApiTags } from '@nestjs/swagger';
 import { PayloadUser } from '@/helper';
 
 @ApiTags('页面属内容配置')

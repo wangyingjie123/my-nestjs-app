@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
-import { FastifyRequest } from 'fastify';
 import { Strategy } from 'passport-jwt';
 import { jwtConstants } from '../constants';
+
+import { FastifyRequest } from 'fastify';
 
 const cookieExtractor = function (req: FastifyRequest) {
   let token = null;

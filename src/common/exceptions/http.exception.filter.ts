@@ -1,9 +1,8 @@
-/**
- * @file Http Exception Filter
- * @description Http接口异常拦截
+/*
+ * @Author: Cookie
+ * @Description:
  */
 import { FastifyReply, FastifyRequest } from 'fastify';
-
 import {
   ExceptionFilter,
   Catch,
@@ -17,10 +16,13 @@ import { BusinessException } from './business.exception';
 export class HttpExceptionFilter implements ExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
+
     const response = ctx.getResponse<FastifyReply>();
     const request = ctx.getRequest<FastifyRequest>();
     const status = exception.getStatus();
-    console.log(exception);
+
+    request.log.error(exception);
+
     // 处理业务异常
     if (exception instanceof BusinessException) {
       const error = exception.getResponse();
@@ -33,6 +35,8 @@ export class HttpExceptionFilter implements ExceptionFilter {
       });
       return;
     }
+
+    // 其它异常处理
     response.status(status).send({
       statusCode: status,
       timestamp: new Date().toISOString(),

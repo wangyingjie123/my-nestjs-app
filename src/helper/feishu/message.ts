@@ -1,4 +1,4 @@
-import { methodV } from 'src/utils/request';
+import { methodV } from '@/utils/request';
 
 export enum RECEIVE_TYPE {
   'open_id',
@@ -32,7 +32,7 @@ export const messages = async (
   params: MESSAGES_PARAMS,
   app_token: string,
 ) => {
-  // console.log(receive_id_type, params, app_token);
+  console.log(receive_id_type, params, app_token);
 
   const { data } = await methodV({
     url: `/im/v1/messages`,

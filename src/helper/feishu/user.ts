@@ -24,7 +24,7 @@ export const getSingleUserInfo = async (
   const { data } = await methodV({
     url: `/contact/v3/users/${feishuUserId}`,
     method: 'GET',
-    params: {
+    query: {
       user_id_type: 'user_id',
     },
     headers: {
@@ -47,7 +47,7 @@ export const getUserListByDepartmentId = async (
     url: `https://open.feishu.cn/open-apis/contact/v3/users`,
     // url: `/contact/v3/users/find_by_department`,
     method: 'GET',
-    params: {
+    query: {
       department_id_type: 'department_id',
       department_id,
       page_size: 50,
@@ -63,26 +63,10 @@ export const getEmployeeTypeEnums = async ({ app_token }) => {
   const { data } = await methodV({
     url: `/contact/v3/employee_type_enums`,
     method: 'GET',
-    params: {
+    query: {
       page_token: 1,
       page_size: 100,
     },
-    headers: {
-      Authorization: `Bearer ${app_token}`,
-    },
-  });
-  return data;
-};
-
-/**
- * 获取群组ID
- * @param param0 toket
- * @returns id
- */
-export const getChatGroupId = async (app_token: string) => {
-  const { data } = await methodV({
-    url: `/im/v1/chats`,
-    method: 'GET',
     headers: {
       Authorization: `Bearer ${app_token}`,
     },

@@ -1,25 +1,24 @@
 import { In, Repository } from 'typeorm';
 import { Injectable, Inject } from '@nestjs/common';
-import { isNotEmpty } from 'class-validator';
-import { paginate, Pagination } from 'nestjs-typeorm-paginate';
-
-import { User } from './user.mongo.entity';
+import { User } from './user.mysql.entity';
 import { UserListWithPaginationDto } from './user.dto';
+import { isNotEmpty } from 'class-validator';
 import { FeishuUserInfo } from '@/userCenter/user/feishu/feishu.dto';
+import { paginate, Pagination } from 'nestjs-typeorm-paginate';
 import { getPaginationOptions } from '@/helper';
 import { RolePrivilegeService } from '../role-privilege/role-privilege.service';
 import { UserRoleService } from '../user-role/user-role.service';
-import { UserRole } from '../user-role/user-role.mongo.entity';
+import { UserRole } from '../user-role/user-role.mysql.entity';
 import { RoleService } from '../role/role.service';
 import { PrivilegeService } from '../privilege/privilege.service';
 import { FeishuService } from './feishu/feishu.service';
 
-// type SyncUserInfo = {
-//   name: string;
-//   email: string;
-//   username: string;
-//   gitUserId: number;
-// };
+export type SyncUserInfo = {
+  name: string;
+  email: string;
+  username: string;
+  gitUserId: number;
+};
 
 @Injectable()
 export class UserService {

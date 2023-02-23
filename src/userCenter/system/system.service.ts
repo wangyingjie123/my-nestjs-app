@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { In, Repository } from 'typeorm';
-import { System } from './system.mongo.entity';
+import { System } from './system.mysql.entity';
 
 @Injectable()
 export class SystemService {

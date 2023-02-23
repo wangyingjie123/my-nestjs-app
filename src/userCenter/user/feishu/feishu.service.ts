@@ -35,7 +35,6 @@ export class FeishuService {
       if (response.code === 0) {
         // token 有效期为 2 小时，在此期间调用该接口 token 不会改变。当 token 有效期小于 30 分的时候，
         // 再次请求获取 token 的时候，会生成一个新的 token，与此同时老的 token 依然有效。
-
         appToken = response.app_access_token;
         this.cacheManager.set(
           this.APP_TOKEN_CACHE_KEY,
@@ -64,7 +63,6 @@ export class FeishuService {
       access_token,
       expires_in - 60,
     );
-
     // 缓存用户的 fresh token
     await this.cacheManager.set(
       `feishu_refresh_token__${user_id}`,
@@ -97,7 +95,7 @@ export class FeishuService {
       const usrTokenInfo = await this.getUserTokenByRefreshToken(refreshToken);
       // 更新缓存的用户 token
       await this.setUserCacheToken(usrTokenInfo);
-      userToken = usrTokenInfo.access_token as string;
+      userToken = usrTokenInfo.access_token;
     }
     return userToken;
   }
@@ -130,7 +128,7 @@ export class FeishuService {
       throw new FeishuHttpException(err);
     });
     if (code !== 0) {
-      throw new BusinessException(msg as string);
+      throw new BusinessException(msg);
     }
     return data;
   }
@@ -143,7 +141,7 @@ export class FeishuService {
       throw new FeishuHttpException(err);
     });
     if (code !== 0) {
-      throw new BusinessException(msg as string);
+      throw new BusinessException(msg);
     }
     return data;
   }

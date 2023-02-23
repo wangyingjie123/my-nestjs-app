@@ -1,7 +1,12 @@
+/*
+ * @Author: Cookie
+ * @Description: 日志基础类，包含控制台打印
+ */
+
 const chalk = require('chalk');
 const dayjs = require('dayjs');
-const JSONparse = require('fast-json-parse');
 const split = require('split2');
+const JSONparse = require('fast-json-parse');
 
 const levels = {
   [60]: 'Fatal',
@@ -11,6 +16,7 @@ const levels = {
   [20]: 'Debug',
   [10]: 'Trace',
 };
+
 const colors = {
   [60]: 'magenta',
   [50]: 'red',
@@ -19,6 +25,7 @@ const colors = {
   [20]: 'white',
   [10]: 'white',
 };
+
 interface ILogStream {
   format?: () => void;
 }

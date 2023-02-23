@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { ClientsModule, Transport } from '@nestjs/microservices';
-
 import { DatabaseModule } from '@/common/database/database.module';
 import { PageController } from './page.controller';
 import { PageProviders } from './page.providers';
@@ -9,6 +7,7 @@ import { PageService } from './page.service';
 import { PageConfigService } from './page-config/page-config.service';
 import { PageConfigController } from './page-config/page-config.controller';
 import { DeployConfigService } from './deploy-config/deploy-config.service';
+import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
   imports: [

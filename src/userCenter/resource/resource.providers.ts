@@ -1,9 +1,9 @@
-import { Resource } from './resource.mongo.entity';
+import { Resource } from './resource.mysql.entity';
 
 export const ResourceProviders = [
   {
     provide: 'RESOURCE_REPOSITORY',
     useFactory: (AppDataSource) => AppDataSource.getRepository(Resource),
-    inject: ['MONGODB_DATA_SOURCE'],
+    inject: ['MYSQL_DATA_SOURCE'],
   },
 ];

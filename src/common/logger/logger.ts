@@ -4,11 +4,10 @@
  */
 
 import { join } from 'path';
-import pinoMultiStream from 'pino-multi-stream';
 import { FileStream } from './fileStream';
 import { LogStream } from './logStream';
 
-const multiStream = pinoMultiStream.multistream;
+const multiStream = require('pino-multi-stream').multistream;
 
 function asReqValue(req) {
   if (req.raw) {

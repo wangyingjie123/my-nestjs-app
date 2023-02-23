@@ -1,6 +1,6 @@
 import { APP_ID, APP_SECRET } from './const';
 
-import { methodV } from 'src/utils/request';
+import { methodV } from '@/utils/request';
 
 export type GetAppTokenRes = {
   code: number;
@@ -9,6 +9,9 @@ export type GetAppTokenRes = {
   expire: number;
 };
 
+/**
+ * @description: 获取用户 token
+ */
 export const getUserToken = async ({ code, app_token }) => {
   const { data } = await methodV({
     url: `/authen/v1/access_token`,
@@ -24,6 +27,9 @@ export const getUserToken = async ({ code, app_token }) => {
   return data;
 };
 
+/**
+ * @description: 刷新用户 token
+ */
 export const refreshUserToken = async ({ refreshToken, app_token }) => {
   const { data } = await methodV({
     url: `/authen/v1/refresh_access_token`,
@@ -53,10 +59,7 @@ export const getUserAccessToken = async (code) => {
   });
   return data as GetAppTokenRes;
 };
-/**
- * 获取自建应用app_token
- * @returns token
- */
+
 export const getAppToken = async () => {
   const { data } = await methodV({
     url: `/auth/v3/app_access_token/internal`,

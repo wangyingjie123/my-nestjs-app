@@ -1,8 +1,7 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { MongoRepository } from 'typeorm';
-import { ObjectID } from 'mongodb';
-
 import { Page } from './page.mongo.entity';
+import { ObjectID } from 'mongodb';
 
 @Injectable()
 export class PageService {

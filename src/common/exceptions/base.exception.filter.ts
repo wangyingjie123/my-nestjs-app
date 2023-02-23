@@ -1,15 +1,15 @@
-/**
- * @file Base exception filter
- * @description 全局异常拦截
+/*
+ * @Author: Cookie
+ * @Description:
  */
 import { FastifyReply, FastifyRequest } from 'fastify';
+
 import {
-  ArgumentsHost,
-  Catch,
   ExceptionFilter,
-  // HttpException,
-  ServiceUnavailableException,
+  Catch,
+  ArgumentsHost,
   HttpStatus,
+  ServiceUnavailableException,
 } from '@nestjs/common';
 
 @Catch()
@@ -18,7 +18,10 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<FastifyReply>();
     const request = ctx.getRequest<FastifyRequest>();
+
     request.log.error(exception);
+
+    // 非 HTTP 标准异常的处理。
     response.status(HttpStatus.SERVICE_UNAVAILABLE).send({
       statusCode: HttpStatus.SERVICE_UNAVAILABLE,
       timestamp: new Date().toISOString(),

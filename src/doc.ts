@@ -1,3 +1,8 @@
+/*
+ * @Author: Cookie
+ * @Description: 创建文档
+ */
+
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as packageConfig from '../package.json';
 

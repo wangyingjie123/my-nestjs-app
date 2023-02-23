@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { In, Repository } from 'typeorm';
-import { RolePrivilege } from './role-privilege.mongo.entity';
+import { RolePrivilege } from './role-privilege.mysql.entity';
 
 @Injectable()
 export class RolePrivilegeService {

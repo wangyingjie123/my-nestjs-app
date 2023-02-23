@@ -1,3 +1,9 @@
+/*
+ * @Author: hbh
+ * @Date: 2021-12-31 13:59:09
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2022-04-23 20:32:55
+ */
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
 import { DEVICE_TYPE, PAGE_TYPE } from './page.mongo.entity';

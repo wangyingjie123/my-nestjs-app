@@ -1,6 +1,6 @@
 /*
  * @Author: Cookie
- * @Description: 飞书环境变量
+ * @Description:
  */
 
 import { getConfig } from '@/utils';

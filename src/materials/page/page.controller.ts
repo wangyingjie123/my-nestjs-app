@@ -1,5 +1,3 @@
-import { createReadStream } from 'fs';
-import { join } from 'path';
 import {
   Controller,
   Post,
@@ -9,15 +7,15 @@ import {
   StreamableFile,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { ConfigService } from '@nestjs/config';
-import { ClientProxy } from '@nestjs/microservices';
-
 import { addPageDto } from './page.dto';
 import { PageService } from './page.service';
+import { ConfigService } from '@nestjs/config';
 import { PageConfigService } from './page-config/page-config.service';
 import { DeployConfigService } from './deploy-config/deploy-config.service';
-
+import { ClientProxy } from '@nestjs/microservices';
 import { IsStream } from '@/common/constants';
+import { createReadStream } from 'fs';
+import { join } from 'path';
 import { Public } from '@/auth/constants';
 const log = require('pino')({ level: 'info' });
 

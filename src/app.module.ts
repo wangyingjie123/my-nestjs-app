@@ -1,18 +1,18 @@
 import { CacheModule, Module, CacheStore } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
-
-import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
+import { redisStore } from 'cache-manager-redis-store';
 import { PageModule } from './materials/page/page.module';
 import { AuthModule } from './auth/auth.module';
+
+import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
+
+import { ConfigModule } from '@nestjs/config';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
-import { redisStore } from 'cache-manager-redis-store';
 import { getConfig } from './utils';
 
 const redisConfig = getConfig().REDIS_CONFIG;
 @Module({
   imports: [
-    // 全局的cacheModule
     CacheModule.registerAsync({
       isGlobal: true,
       useFactory: async () => {

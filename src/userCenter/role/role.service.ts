@@ -6,7 +6,7 @@ import { SystemService } from '../system/system.service';
 import { getPaginationOptions, CustomPaginationMeta } from '@/helper';
 import { In, Repository } from 'typeorm';
 import { CreateRoleDto, RoleListWithPaginationDto } from './role.dto';
-import { Role } from './role.mongo.entity';
+import { Role } from './role.mysql.entity';
 
 @Injectable()
 export class RoleService {

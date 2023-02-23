@@ -6,7 +6,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
 import { PaginationParams } from 'types/type';
-import { UserStatus } from './user.mongo.entity';
+import { UserStatus } from './user.mysql.entity';
 
 export class DisableUserDto {
   @IsNotEmpty()

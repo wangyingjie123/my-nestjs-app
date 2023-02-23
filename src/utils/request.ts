@@ -1,3 +1,8 @@
+/*
+ * @Author: Cookie
+ * @Description:
+ */
+
 import axios, { Method } from 'axios';
 import { getConfig } from '@/utils';
 
@@ -27,8 +32,8 @@ interface IMethodV {
   query?: Record<string, unknown>;
 }
 
-export interface IRequest<T = Record<string, unknown>> {
-  data: T;
+export interface IRequest {
+  data: any;
   code: number;
 }
 
@@ -48,6 +53,7 @@ const methodV = async ({
   } else {
     sendUrl = `${FEISHU_URL}${url}`;
   }
+  console.log(sendUrl);
   try {
     return new Promise((resolve, reject) => {
       axios({

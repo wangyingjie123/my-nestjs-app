@@ -33,7 +33,7 @@ const onError = (err) => {
 };
 
 const fileExists = async (srcPath) => {
-  return new Promise((resolve, _reject) => {
+  return new Promise((resolve) => {
     // 自运行返回Promise
     stat(srcPath, (err, stats) => {
       if (!err && stats.isFile()) {
@@ -46,7 +46,7 @@ const fileExists = async (srcPath) => {
 };
 
 const fileRename = async (oldPath, newPath) => {
-  return new Promise((resolve, _reject) => {
+  return new Promise((resolve) => {
     rename(oldPath, newPath, (e) => {
       resolve(e ? false : true);
     });
@@ -209,7 +209,7 @@ export class FileStream extends LogStream {
         this.reloadStream();
       })
       .catch((e) => {
-        console.error(e);
+        console.log(e);
         this.reloadStream();
       });
   }

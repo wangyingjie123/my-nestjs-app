@@ -4,7 +4,7 @@ import { paginate, Pagination } from 'nestjs-typeorm-paginate';
 import { getPaginationOptions, CustomPaginationMeta } from 'src/helper';
 import { Repository } from 'typeorm';
 import { ResourceListWithPaginationDto } from './resource.dto';
-import { Resource } from './resource.mongo.entity';
+import { Resource } from './resource.mysql.entity';
 
 @Injectable()
 export class ResourceService {

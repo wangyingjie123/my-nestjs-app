@@ -1,38 +1,45 @@
 declare const module: any;
-import { ValidationPipe, VersioningType } from '@nestjs/common';
+
 import { NestFactory } from '@nestjs/core';
 import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
+import { ValidationPipe, VersioningType } from '@nestjs/common';
+import fastifyCookie from '@fastify/cookie';
 import fastify from 'fastify';
 import * as cookieParser from 'cookie-parser';
+
+import { generateDocument } from './doc';
+import { FastifyLogger } from './common/logger';
+import { catchError } from './common/logger/catchError';
 import { AllExceptionsFilter } from './common/exceptions/base.exception.filter';
 import { HttpExceptionFilter } from './common/exceptions/http.exception.filter';
 import { AppModule } from './app.module';
-import { FastifyLogger } from './common/logger';
-import { catchError } from './common/logger/catchError';
-import { generateDocument } from './doc';
-import fastifyCookie from '@fastify/cookie';
 
 catchError();
+
 async function bootstrap() {
-  // 初始化fastify
+  // 初始化 fastify
   const fastifyInstance = fastify({
     logger: FastifyLogger,
+    // logger: true
   });
-  // 创建nest 实例
+
+  // fastify hook 拦截器
+  // fastHook(fastifyInstance)
+
+  // 创建 NEST 实例
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
     new FastifyAdapter(fastifyInstance),
   );
+
   app.register(fastifyCookie, {
     secret: 'my-secret', // for cookies signature
   });
-  // 统一响应格式
-  // app.useGlobalInterceptors(new TransformInterceptor());
 
-  // 异常捕获器
+  // 异常过滤器
   app.useGlobalFilters(new AllExceptionsFilter(), new HttpExceptionFilter());
 
   // 设置全局接口前缀
@@ -53,9 +60,9 @@ async function bootstrap() {
   generateDocument(app);
 
   // 启动服务
-  await app.listen(3005);
+  await app.listen(3000);
 
-  // 热更新
+  // 添加热更新
   if (module.hot) {
     module.hot.accept();
     module.hot.dispose(() => app.close());

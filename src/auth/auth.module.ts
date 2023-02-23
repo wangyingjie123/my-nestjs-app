@@ -1,24 +1,25 @@
-import { PassportStrategy } from '@nestjs/passport';
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Module } from '@nestjs/common';
+import { UserModule } from '@/userCenter/user/user.module';
 import { AuthService } from './auth.service';
-import { Strategy } from 'passport-custom';
-import { FastifyRequest } from 'fastify';
+import { JwtStrategy } from './strategies/jwt.strategy';
+import { PassportModule } from '@nestjs/passport';
 
-@Injectable()
-export class FeishuStrategy extends PassportStrategy(Strategy, 'feishu') {
-  constructor(private authService: AuthService) {
-    super();
-  }
+import { JwtModule } from '@nestjs/jwt';
+import { jwtConstants } from './constants';
+import { AuthController } from './auth.controller';
+import { FeishuStrategy } from './strategies/feishu.strategy';
 
-  async validate(req: FastifyRequest): Promise<Payload> {
-    const q: any = req.query;
-
-    const user = await this.authService.validateFeishuUser(q.code as string);
-
-    if (!user) {
-      throw new UnauthorizedException();
-    }
-
-    return user;
-  }
-}
+@Module({
+  imports: [
+    UserModule,
+    PassportModule,
+    JwtModule.register({
+      secret: jwtConstants.secret,
+      signOptions: { expiresIn: jwtConstants.expiresIn },
+    }),
+  ],
+  controllers: [AuthController],
+  providers: [AuthService, JwtStrategy, FeishuStrategy],
+  exports: [AuthService],
+})
+export class AuthModule {}
