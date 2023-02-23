@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 
 import { JwtService } from '@nestjs/jwt';
-import { FeishuUserInfo } from '@/user/feishu/feishu.dto';
-import { FeishuService } from '@/user/feishu/feishu.service';
-import { User } from '@/user/user.mongo.entity';
-import { UserService } from '@/user/user.service';
+import { FeishuUserInfo } from '@/userCenter/user/feishu/feishu.dto';
+import { FeishuService } from '@/userCenter/user/feishu/feishu.service';
+import { User } from '@/userCenter/user/user.mongo.entity';
+import { UserService } from '@/userCenter/user/user.service';
 
 @Injectable()
 export class AuthService {
@@ -14,12 +14,12 @@ export class AuthService {
     private feishuService: FeishuService,
   ) {}
 
-  // 验证飞书用户
   async validateFeishuUser(code: string): Promise<Payload> {
     const feishuInfo: FeishuUserInfo = await this.getFeishuTokenByApplications(
       code,
     );
-    // 将飞书的用户信息同步到数据库
+
+    // 同步信息
     const user: User = await this.userService.createOrUpdateByFeishu(
       feishuInfo,
     );
@@ -34,16 +34,15 @@ export class AuthService {
     };
   }
 
-  // jwt 登录
   async login(user: Payload) {
     return {
-      access_token: this.jwtService.sign({ ...user }),
+      access_token: this.jwtService.sign(user),
     };
   }
 
-  // 获取飞书用户信息
   async getFeishuTokenByApplications(code: string) {
     const data = await this.feishuService.getUserToken(code);
+
     const feishuInfo: FeishuUserInfo = {
       accessToken: data.access_token,
       avatarBig: data.avatar_big,

@@ -1,10 +1,10 @@
-// jwt-auth.strategy.ts
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
+import { FastifyRequest } from 'fastify';
 import { Strategy } from 'passport-jwt';
 import { jwtConstants } from '../constants';
 
-const cookieExtractor = function (req) {
+const cookieExtractor = function (req: FastifyRequest) {
   let token = null;
   if (req && req.cookies) {
     token = req.cookies['jwt'];

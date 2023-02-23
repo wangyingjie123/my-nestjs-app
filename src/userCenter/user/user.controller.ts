@@ -1,68 +1,70 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  // Patch,
-  Param,
-  Delete,
-  Version,
-  VERSION_NEUTRAL,
-} from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { ConfigService } from '@nestjs/config';
-import { BusinessException } from '@/common/exceptions/business.exception';
+import { Controller, Post, Body } from '@nestjs/common';
 import { UserService } from './user.service';
-import { AddUserDto } from './dto/create-user.dto';
+import {
+  UserListWithPaginationDto,
+  GetRolesByIdDto,
+  SetRolesDto,
+  DisableUserDto,
+} from './user.dto';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { PayloadUser } from '@/helper';
+import { UserRoleService } from '../user-role/user-role.service';
+import { BusinessException } from '@/common/exceptions/business.exception';
 
-@ApiTags('用户信息')
-@Controller({
-  path: 'user',
-})
+@ApiTags('用户')
+@Controller('user')
 export class UserController {
   constructor(
     private readonly userService: UserService,
-    private readonly configService: ConfigService,
+    private readonly userRoleService: UserRoleService,
   ) {}
 
   @ApiOperation({
-    summary: '新增用户',
+    summary: '用户信息',
   })
-  @Post('/add')
-  create(@Body() user: AddUserDto) {
-    return this.userService.createOrSave(user);
+  @Post('/profile')
+  profile(@PayloadUser() user: Payload) {
+    return this.userService.profile(user.userId);
   }
 
   @ApiOperation({
-    summary: '获取yaml配置文件中的值',
+    summary: '是否激活用户',
   })
-  @Get('getTestName')
-  getTestName() {
-    return this.configService.get('TEST_VALUE').name;
-  }
-
-  @Get('findBusinessError')
-  @Version([VERSION_NEUTRAL])
-  findError() {
-    const a: any = {};
-    try {
-      console.log(a.b.c);
-    } catch (error) {
-      throw new BusinessException('你这个参数错了！');
+  @Post('changeStatus')
+  async changeStatus(@Body() dto: DisableUserDto) {
+    const found = await this.userService.getUserById(dto.userId);
+    if (!found) {
+      throw new BusinessException(`未找到 ID 为 ${dto.userId} 的用户`);
     }
-
-    return 'i am new error';
+    return this.userService.createOrSave({ ...found, status: dto.status });
   }
 
-  @Get(':id')
-  @Version([VERSION_NEUTRAL])
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
+  @ApiOperation({
+    summary: '用户列表（分页）',
+  })
+  @Post('/list/pagination')
+  async listWithPagination(@Body() dto: UserListWithPaginationDto) {
+    const { page, ...searchParams } = dto;
+    return this.userService.paginate(searchParams, page);
   }
 
-  @Delete(':id')
-  @Version([VERSION_NEUTRAL])
-  remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
+  @ApiOperation({
+    summary: '通过用户 ID 获取角色列表',
+  })
+  @Post('/getRolesById')
+  getRolesById(@Body() dto: GetRolesByIdDto) {
+    return this.userService.getRolesById(dto.userId, dto.systemId);
+  }
+
+  @ApiOperation({
+    summary: '设置用户角色',
+  })
+  @Post('setRoles')
+  async setRoles(@Body() dto: SetRolesDto) {
+    return await this.userRoleService.setUserRoles(
+      dto.userId,
+      dto.roleIds,
+      dto.systemId,
+    );
   }
 }
