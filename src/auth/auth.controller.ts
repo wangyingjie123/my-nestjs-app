@@ -6,9 +6,13 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { GetTokenByApplications } from './auth.dto';
 import { Public } from './constants';
 import { PayloadUser } from '@/helper';
+import { getConfig } from '@/utils';
 import { FeishuService } from '@/userCenter/user/feishu/feishu.service';
 import { FastifyReply } from 'fastify';
 
+const {
+  FEISHU_CONFIG: { FEISHU_APP_ID },
+} = getConfig();
 @ApiTags('用户认证')
 @Controller('auth')
 export class AuthController {
@@ -29,8 +33,7 @@ export class AuthController {
 
   @ApiOperation({
     summary: '飞书 Auth2 授权登录',
-    description:
-      '通过 code 获取`access_token`https://open.feishu.cn/open-apis/authen/v1/index?app_id=cli_a2ed5e7be4f9500d&redirect_uri=http%3A%2F%2F127.0.0.1%3A8080%2Fauth',
+    description: `通过 code 获取'access_token'https://open.feishu.cn/open-apis/authen/v1/index?app_id=${FEISHU_APP_ID}&redirect_uri=http%3A%2F%2F10.1.60.82%3A3333%2F`,
   })
   @UseGuards(FeishuAuthGuard)
   @Public()
