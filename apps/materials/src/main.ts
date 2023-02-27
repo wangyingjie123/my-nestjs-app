@@ -43,7 +43,7 @@ async function bootstrap() {
   app.useGlobalFilters(new AllExceptionsFilter(), new HttpExceptionFilter());
 
   // 设置全局接口前缀
-  app.setGlobalPrefix('api', { exclude: ['*'] });
+  app.setGlobalPrefix('api');
 
   // 格式化 cookie
   app.use(cookieParser());

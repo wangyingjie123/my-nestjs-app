@@ -1,14 +1,16 @@
 declare const module: any;
 
-import fastify from 'fastify';
-import * as cookieParser from 'cookie-parser';
 import { NestFactory } from '@nestjs/core';
 import { UserCenterModule } from './user-center.module';
-
+import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
+
+import fastify from 'fastify';
+import * as cookieParser from 'cookie-parser';
+
 import { generateDocument } from './doc';
 import {
   FastifyLogger,
@@ -20,18 +22,29 @@ import { ValidationPipe, VersioningType } from '@nestjs/common';
 import fastifyCookie from '@fastify/cookie';
 
 catchError();
-
 async function bootstrap() {
   // 初始化 fastify
   const fastifyInstance = fastify({
     logger: FastifyLogger,
-    // logger: true
   });
 
   // 创建 NEST 实例
   const app = await NestFactory.create<NestFastifyApplication>(
     UserCenterModule,
     new FastifyAdapter(fastifyInstance),
+  );
+  // micro serivce
+  app.connectMicroservice<MicroserviceOptions>(
+    {
+      transport: Transport.TCP,
+      options: {
+        port: 4100,
+        host: '0.0.0.0',
+      },
+    },
+    {
+      inheritAppConfig: true, // 继承 app 配置
+    },
   );
 
   app.register(fastifyCookie, {
@@ -42,7 +55,7 @@ async function bootstrap() {
   app.useGlobalFilters(new AllExceptionsFilter(), new HttpExceptionFilter());
 
   // 设置全局接口前缀
-  app.setGlobalPrefix('api', { exclude: ['*'] });
+  app.setGlobalPrefix('api');
 
   // 格式化 cookie
   app.use(cookieParser());
@@ -58,8 +71,11 @@ async function bootstrap() {
   // 创建文档
   generateDocument(app);
 
+  // 启动所有微服务
+  await app.startAllMicroservices();
+
   // 启动服务
-  await app.listen(3002);
+  await app.listen(4000);
 
   // 添加热更新
   if (module.hot) {
@@ -67,5 +83,4 @@ async function bootstrap() {
     module.hot.dispose(() => app.close());
   }
 }
-
 bootstrap();

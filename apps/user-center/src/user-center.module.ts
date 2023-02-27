@@ -1,6 +1,6 @@
 import { CacheModule, Module, CacheStore } from '@nestjs/common';
 
-import { APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_INTERCEPTOR, APP_GUARD } from '@nestjs/core';
 
 import { ConfigModule } from '@nestjs/config';
 import { TransformInterceptor } from '@app/common';
@@ -8,6 +8,7 @@ import { redisStore } from 'cache-manager-redis-store';
 import { getConfig } from '@app/common';
 import { UserModule } from './userCenter/user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 
 const redisConfig = getConfig().REDIS_CONFIG;
 @Module({
@@ -43,6 +44,10 @@ const redisConfig = getConfig().REDIS_CONFIG;
     {
       provide: APP_INTERCEPTOR,
       useClass: TransformInterceptor,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
     },
   ],
 })

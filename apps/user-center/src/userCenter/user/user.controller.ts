@@ -7,9 +7,10 @@ import {
   DisableUserDto,
 } from './user.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { PayloadUser } from '@app/common/helper';
+import { PayloadUser, Public } from '@app/common';
 import { UserRoleService } from '../user-role/user-role.service';
 import { BusinessException } from '@app/common';
+import { MessagePattern, Payload as MicroPayload } from '@nestjs/microservices';
 
 @ApiTags('用户')
 @Controller('user')
@@ -25,6 +26,12 @@ export class UserController {
   @Post('/profile')
   profile(@PayloadUser() user: Payload) {
     return this.userService.profile(user.userId);
+  }
+
+  @MessagePattern('userCenter.user.profile')
+  @Public()
+  micro_profile(@MicroPayload() data: Payload) {
+    return this.profile(data);
   }
 
   @ApiOperation({
