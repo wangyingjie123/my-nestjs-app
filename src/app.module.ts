@@ -1,7 +1,7 @@
 import { CacheModule, Module, CacheStore } from '@nestjs/common';
 import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { redisStore } from 'cache-manager-redis-store';
-import { PageModule } from './materials/page/page.module';
+import { materialsModule } from './materials/materials.module';
 import { AuthModule } from './auth/auth.module';
 
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
@@ -38,7 +38,7 @@ const redisConfig = getConfig().REDIS_CONFIG;
       load: [getConfig],
     }),
     AuthModule,
-    PageModule,
+    materialsModule,
   ],
   controllers: [],
   providers: [

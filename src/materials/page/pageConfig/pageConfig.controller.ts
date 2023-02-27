@@ -1,12 +1,9 @@
 import { Controller, Post, Body } from '@nestjs/common';
-import { PageConfigService } from './page-config.service';
-import {
-  CreatePageConfigDto,
-  SearchPageConfigDto,
-} from './dto/create-page-config.dto';
+import { PageConfigService } from './pageConfig.service';
 import { PageService } from '../page.service';
 import { ApiTags } from '@nestjs/swagger';
 import { PayloadUser } from '@/helper';
+import { CreatePageConfigDto, SearchPageConfigDto } from './pageConfig.dto';
 
 @ApiTags('页面属内容配置')
 @Controller('page-config')
@@ -21,8 +18,6 @@ export class PageConfigController {
     @Body() createPageConfigDto: CreatePageConfigDto,
     @PayloadUser() user,
   ) {
-    console.log(user);
-
     const { pageId } = createPageConfigDto;
     const pageConfig = await this.pageConfigService.create({
       ...createPageConfigDto,

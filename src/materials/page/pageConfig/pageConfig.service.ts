@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { MongoRepository } from 'typeorm';
-import { PageConfig } from './page-config.mongo.entity';
+import { PageConfig } from './pageConfig.mongo.entity';
 
 @Injectable()
 export class PageConfigService {

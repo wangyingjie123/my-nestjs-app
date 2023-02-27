@@ -6,7 +6,6 @@ import {
   Entity,
 } from 'typeorm';
 
-// 物料内容表
 @Entity()
 export class DeployTestConfig {
   @ObjectIdColumn()
