@@ -2,8 +2,8 @@ import { CacheModule, Module, CacheStore } from '@nestjs/common';
 import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { redisStore } from 'cache-manager-redis-store';
 import { materialsModule } from './materials/materials.module';
+import { IntercepterModule } from './core/intercepter.module';
 import { AuthModule } from './auth/auth.module';
-
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 
 import { ConfigModule } from '@nestjs/config';
@@ -39,6 +39,7 @@ const redisConfig = getConfig().REDIS_CONFIG;
     }),
     AuthModule,
     materialsModule,
+    IntercepterModule,
   ],
   controllers: [],
   providers: [
