@@ -9,7 +9,7 @@
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
-    "dev": "nest start --watch",
+    "start": "nest start",
     "start:gateway": "cross-env RUNNING_ENV=dev nest start --watch",
     "start:user": "cross-env RUNNING_ENV=dev nest start --watch user-center",
     "start:materials": "cross-env RUNNING_ENV=dev nest start --watch materials",
