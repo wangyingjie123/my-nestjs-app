@@ -27,7 +27,7 @@ MYSQL_CONFIG:
   entities: 'mysql' # 这里的命名一定要跟 MongoDB 里面的配置命名区分开
   synchronize: true
 REDIS_CONFIG:
-  host: '127.0.0.1' # redis连接
+  host: 'redis' # redis连接
   port: 6379 # redis 端口
   auth: '' # redis 连接密码
   db: 1 # redis 数据库

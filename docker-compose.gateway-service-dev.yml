@@ -8,10 +8,10 @@ services:
     ports:
       - '3000:3000'
     environment:
-      RUNNING_ENV: 'dev'
+      RUNNING_ENV: 'prod'
     networks:
-      - servicebus
-
+      - redis-network
 networks:
-  servicebus:
-    name: servicebus
+  redis-network:
+    external:
+      name: redis
