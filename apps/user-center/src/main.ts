@@ -75,7 +75,7 @@ async function bootstrap() {
   await app.startAllMicroservices();
 
   // 启动服务
-  await app.listen(4000);
+  await app.listen(4000, '0.0.0.0');
 
   // 添加热更新
   if (module.hot) {
