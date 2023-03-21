@@ -16,7 +16,7 @@
     "start:user": "cross-env RUNNING_ENV=dev nest start --watch user-center",
     "start:materials": "cross-env RUNNING_ENV=dev nest start --watch materials",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "RUNNING_ENV=prod node dist/apps/fast-gateway/apps/fast-gateway/src/main.js --env production",
+    "start:prod": "RUNNING_ENV=prod node dist/apps/user-center/apps/user-center/src/main.js --env production",
     "start:hotdev": "RUNNING_ENV=dev nest build --webpack --webpackPath webpack-hmr.config.js --watch",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",

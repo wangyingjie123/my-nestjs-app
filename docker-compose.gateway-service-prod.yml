@@ -1,11 +1,30 @@
 version: '3.7'
 services:
-  gateway-service-prod:
-    container_name: gateway-service-prod
+  gateway-service-main:
     build:
       context: ./
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.main
     environment:
       RUNNING_ENV: 'prod'
     ports:
       - '3000:3000'
+  # gateway-service-user:
+  #   build:
+  #     context: ./apps/user-center
+  #     dockerfile: Dockerfile
+  #   environment:
+  #     RUNNING_ENV: 'prod'
+  #   ports:
+  #     - '4000:4000'
+  #   depends_on:
+  #     - base
+  # gateway-service-materials:
+  #   build:
+  #     context: ./apps/materials
+  #     dockerfile: Dockerfile
+  #   environment:
+  #     RUNNING_ENV: 'prod'
+  #   ports:
+  #     - '3001:3001'
+  #   depends_on:
+  #     - base
