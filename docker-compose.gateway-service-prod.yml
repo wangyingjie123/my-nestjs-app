@@ -1,0 +1,11 @@
+version: '3.7'
+services:
+  gateway-service-prod:
+    container_name: gateway-service-prod
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    environment:
+      RUNNING_ENV: 'prod'
+    ports:
+      - '3000:3000'

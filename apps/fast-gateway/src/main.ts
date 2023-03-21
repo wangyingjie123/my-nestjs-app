@@ -71,7 +71,7 @@ async function bootstrap() {
   generateDocument(app);
 
   // 启动服务
-  await app.listen(3000);
+  await app.listen(3000, '0.0.0.0');
 
   // 添加热更新
   if (module.hot) {

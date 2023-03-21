@@ -39,8 +39,14 @@ COPY --chown=node:node . .
 # 执行打包命令
 RUN npm run build
 
+# Run npm run build:user
+
+# Run npm run build:materials
+
 # 设置生产环境变量
 ENV NODE_ENV production
+
+ENV RUNNING_ENV prod
 
 # 运行' npm ci '会删除现有的node_modules目录，并传入——only=production确保只安装了生产依赖项。这确保node_modules目录尽可能优化
 RUN npm ci --only=production && npm cache clean --force
@@ -56,6 +62,17 @@ FROM node:18-alpine As production
 # 将生产依赖和打包后的文件复制到指定目录下
 COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
 COPY --chown=node:node --from=build /usr/src/app/dist ./dist
+COPY --chown=node:node --from=build /usr/src/app/.config ./.config
+COPY --chown=node:node --from=build /usr/src/app/package.json ./package.json
 
+# 暴露端口
+EXPOSE 3000
 # 启动服务
-CMD [ "node", "dist/main.js" ]
+# CMD [ "node", "dist/apps/fast-gateway/apps/fast-gateway/src/main.js"]
+# CMD [ "node", "dist/apps/user-center/apps/user-center/src/main.js"]
+# CMD [ "node", "dist/apps/materials/apps/materials/src/main.js"]
+
+
+ENTRYPOINT ["npm", "run"]
+
+CMD ["start:prod"]
