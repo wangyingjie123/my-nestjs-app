@@ -6,9 +6,11 @@ import { DataSource } from 'typeorm';
 
 import { getConfig } from '../utils/index';
 import { NamingStrategy } from './naming.strategies';
+import { fileURLToPath } from 'url';
+import { join, dirname } from 'path';
+const __filename = fileURLToPath(import.meta.url);
 
-import { join } from 'path';
-
+const __dirname = dirname(__filename);
 const { MONGODB_CONFIG, MYSQL_CONFIG } = getConfig();
 
 // 静态文件处理与 webpack hmr 热更新冲突

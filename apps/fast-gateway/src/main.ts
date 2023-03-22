@@ -1,5 +1,5 @@
-declare const module: any;
-
+// declare const module: any;
+import { createRequire } from 'module';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import {
@@ -8,11 +8,12 @@ import {
 } from '@nestjs/platform-fastify';
 
 import fastify from 'fastify';
-import * as cookieParser from 'cookie-parser';
+// import * as cookieParser from 'cookie-parser';
+const require = createRequire(import.meta.url);
+const cookieParser = require('cookie-parser');
 
 import { generateDocument } from './doc';
 import {
-  FastifyLogger,
   catchError,
   AllExceptionsFilter,
   HttpExceptionFilter,
@@ -25,7 +26,7 @@ catchError();
 async function bootstrap() {
   // 初始化 fastify
   const fastifyInstance = fastify({
-    logger: FastifyLogger,
+    logger: true,
   });
 
   // fastify hook 拦截器
@@ -73,10 +74,10 @@ async function bootstrap() {
   await app.listen(3000, '0.0.0.0');
 
   // 添加热更新
-  if (module.hot) {
-    module.hot.accept();
-    module.hot.dispose(() => app.close());
-  }
+  // if (module.hot) {
+  //   module.hot.accept();
+  //   module.hot.dispose(() => app.close());
+  // }
 }
 
 bootstrap();

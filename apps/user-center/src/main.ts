@@ -1,5 +1,5 @@
-declare const module: any;
-
+// declare const module: any;
+import { createRequire } from 'module';
 import { NestFactory } from '@nestjs/core';
 import { UserCenterModule } from './user-center.module';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
@@ -9,7 +9,8 @@ import {
 } from '@nestjs/platform-fastify';
 
 import fastify from 'fastify';
-import * as cookieParser from 'cookie-parser';
+const require = createRequire(import.meta.url);
+const cookieParser = require('cookie-parser');
 
 import { generateDocument } from './doc';
 import {
@@ -78,9 +79,9 @@ async function bootstrap() {
   await app.listen(4000, '0.0.0.0');
 
   // 添加热更新
-  if (module.hot) {
-    module.hot.accept();
-    module.hot.dispose(() => app.close());
-  }
+  // if (module.hot) {
+  //   module.hot.accept();
+  //   module.hot.dispose(() => app.close());
+  // }
 }
 bootstrap();

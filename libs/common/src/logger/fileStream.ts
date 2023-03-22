@@ -6,9 +6,10 @@
 import { dirname } from 'path';
 import { createWriteStream, stat, rename } from 'fs';
 
-const assert = require('assert');
-const mkdirp = require('mkdirp');
-
+// const assert = require('assert');
+// const mkdirp = require('mkdirp');
+import assert from 'assert';
+import mkdirp from 'mkdirp';
 import { LogStream } from './logStream';
 
 const defaultOptions = {

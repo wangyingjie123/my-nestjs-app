@@ -5,18 +5,25 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
+  "exports": {
+    ".": {
+      "require": "./index.js",
+      "import": "./index.js"
+    }
+  },
+  "type": "module",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
     "build:user": "nest build user-center",
     "build:materials": "nest build materials",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
-    "start": "nest start",
-    "start:gateway": "cross-env RUNNING_ENV=dev nest start --watch",
-    "start:user": "cross-env RUNNING_ENV=dev nest start --watch user-center",
+    "start:gateway": "cross-env RUNNING_ENV=dev nest start --watch -e 'node --es-module-specifier-resolution=node'",
+    "start:user": "cross-env RUNNING_ENV=dev nest start --watch user-center -e 'node --es-module-specifier-resolution=node'",
     "start:materials": "cross-env RUNNING_ENV=dev nest start --watch materials",
     "start:debug": "nest start --debug --watch",
     "start:prod": "RUNNING_ENV=prod node dist/apps/user-center/apps/user-center/src/main.js --env production",
+    "start:prod-esm": "RUNNING_ENV=prod node --es-module-specifier-resolution=node dist/apps/fast-gateway/apps/fast-gateway/src/main.js",
     "start:hotdev": "RUNNING_ENV=dev nest build --webpack --webpackPath webpack-hmr.config.js --watch",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
@@ -40,7 +47,7 @@
     "axios": "^1.2.1",
     "cache-manager": "^5.1.4",
     "cache-manager-redis-store": "^3.0.1",
-    "chalk": "^4.1.2",
+    "chalk": "^5.2.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
     "cookie-parser": "^1.4.6",

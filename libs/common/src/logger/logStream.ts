@@ -3,10 +3,14 @@
  * @Description: 日志基础类，包含控制台打印
  */
 
-const chalk = require('chalk');
-const dayjs = require('dayjs');
-const JSONparse = require('fast-json-parse');
-const split = require('split2');
+// const chalk = require('chalk');
+// const dayjs = require('dayjs');
+// const JSONparse = require('fast-json-parse');
+// const split = require('split2');
+import chalk from 'chalk';
+import dayjs from 'dayjs';
+import JSONparse from 'fast-json-parse';
+import split from 'split2';
 const levels = {
   [60]: 'Fatal',
   [50]: 'Error',

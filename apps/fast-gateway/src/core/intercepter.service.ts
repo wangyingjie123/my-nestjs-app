@@ -3,8 +3,8 @@ import { Injectable } from '@nestjs/common';
 import { WebSiteDataModel } from './types';
 import { getMatchedSync } from './intercepter';
 import { ConfigService } from '@nestjs/config';
-import * as WebsitesMock from './websites_mock.json';
-import * as FilesMock from './files_mock.json';
+import WebsitesMock from './websites_mock.json' assert { type: 'json' };
+import FilesMock from './files_mock.json' assert { type: 'json' };
 
 console.log(WebsitesMock);
 

@@ -7,7 +7,7 @@ import { join } from 'path';
 import { FileStream } from './fileStream';
 import { LogStream } from './logStream';
 
-const multiStream = require('pino-multi-stream').multistream;
+// const multiStream = require('pino-multi-stream').multistream;
 
 function asReqValue(req) {
   if (req.raw) {
@@ -73,7 +73,7 @@ export const fastLogger = (opt) => {
     });
   }
 
-  reOpt.stream = multiStream(allStreams);
+  // reOpt.stream = multiStream(allStreams);
 
   return reOpt;
 };
