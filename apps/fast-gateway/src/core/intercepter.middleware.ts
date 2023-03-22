@@ -4,9 +4,9 @@ import type { Request, Response, NextFunction } from 'express';
 @Injectable()
 export class IntercepterMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
-    // const { host } = req.headers;
-    const urlObj = new URL(req.url, `http://${req.headers.host}`);
-    console.log(urlObj);
+    const { host } = req.headers;
+    const urlObj = new URL(req.url, `http://${host}`);
+    console.log('nestdff', urlObj);
     next();
   }
 }

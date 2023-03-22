@@ -1,11 +1,9 @@
 import { CacheModule, Module, CacheStore } from '@nestjs/common';
-
 import { APP_INTERCEPTOR } from '@nestjs/core';
-
 import { ConfigModule } from '@nestjs/config';
-import { TransformInterceptor } from '@app/common';
 import { redisStore } from 'cache-manager-redis-store';
-import { getConfig } from '@app/common';
+
+import { getConfig, TransformInterceptor } from '@app/common';
 import { IntercepterModule } from './core/intercepter.module';
 
 const redisConfig = getConfig().REDIS_CONFIG;
@@ -29,6 +27,7 @@ const redisConfig = getConfig().REDIS_CONFIG;
         };
       },
     }),
+    // 加载配置-这里我们使用自定义的yaml配置文件
     ConfigModule.forRoot({
       ignoreEnvFile: true,
       isGlobal: true,

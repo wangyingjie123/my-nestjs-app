@@ -18,13 +18,11 @@ export class IntercepterService {
   }
 
   async readHtml(urlObj: URL) {
-    const { data: matchedData } = getMatchedSync(urlObj, this.websites);
-    // const html = await this.configService.get(matchedPath);
-
+    const matchedData = getMatchedSync(urlObj, this.websites);
     if (!matchedData) return null;
-
-    const html = FilesMock[matchedData.pageId];
-    // writeFileSync(urlObj.hostname, matchedPath, html);
+    const { data } = matchedData;
+    if (!data) return null;
+    const html = FilesMock[data.pageId];
     return html;
   }
 }
