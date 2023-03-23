@@ -26,7 +26,6 @@ async function bootstrap() {
   // 初始化 fastify
   const fastifyInstance = fastify({
     logger: FastifyLogger,
-    // logger: true
   });
 
   // fastify hook 拦截器

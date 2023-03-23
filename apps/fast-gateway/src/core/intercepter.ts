@@ -104,21 +104,13 @@ export const getMatchedSync = (
 ):
   | { path: string | undefined; data: PageModelItem | undefined }
   | undefined => {
-  if (!urlObj.hostname) {
-    return undefined;
-  }
-
   const website = matchWebsite(urlObj.hostname, websites);
-
   if (!website) {
     return undefined;
   }
-
   const { data, path } = matchPath(website, urlObj.pathname);
-
   if (!data) {
     return { path: undefined, data: undefined };
   }
-
   return { data, path };
 };
