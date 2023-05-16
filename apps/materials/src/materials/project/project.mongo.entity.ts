@@ -4,12 +4,13 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ObjectIdColumn,
+  ObjectID,
 } from 'typeorm';
 
 @Entity()
 export class Project {
   @ObjectIdColumn()
-  id?: number;
+  id?: ObjectID;
 
   @Column()
   zhName: string;

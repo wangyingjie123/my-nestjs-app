@@ -42,13 +42,14 @@ async function bootstrap() {
     secret: 'my-secret', // for cookies signature
   });
 
-  // app.enableCors({
-  //   credentials: true,
-  //   origin: (requestOrigin, callback) => {
-  //     callback(null, requestOrigin);
-  //   },
-  //   methods: ['GET', 'HEAD', 'PUT', 'POST', 'DELETE', 'PATCH', 'OPTIONS'],
-  // });
+  // 启用跨域设置
+  app.enableCors({
+    credentials: true,
+    origin: (requestOrigin, callback) => {
+      callback(null, requestOrigin);
+    },
+    methods: ['GET', 'HEAD', 'PUT', 'POST', 'DELETE', 'PATCH', 'OPTIONS'],
+  });
 
   // 异常过滤器
   app.useGlobalFilters(new AllExceptionsFilter(), new HttpExceptionFilter());
